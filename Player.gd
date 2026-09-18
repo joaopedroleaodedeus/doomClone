@@ -15,7 +15,7 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		rotation_degrees.y -= MOUSE_SENS * event.relative.x
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_pressed("exit"):
 		get_tree().quit()
 	if Input.is_action_pressed("restart"):
