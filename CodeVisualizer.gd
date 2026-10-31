@@ -46,12 +46,13 @@ var frame_count := 0
 var stage := 0           # 0 = ocioso | 1 = desenha polimétrica | 2 = desenha grafo | 3 = fim
 
 const EXCLUDE_FILES = ["CodeVisualizer.gd"]
+const FONT_SIZE = 14     # Godot 4: draw_string() recebe o tamanho da fonte explicitamente
 
 
 func _ready():
 	anchor_right = 1.0
 	anchor_bottom = 1.0
-	OS.set_window_size(Vector2(1280, 800))
+	get_window().size = Vector2i(1280, 800)
 
 	_collect_scripts("res://")
 	_analyze_calls()
@@ -63,17 +64,19 @@ func _ready():
 		return
 
 	stage = 1
-	update()
+	queue_redraw()
 
 
 # ---------------------------------------------------------------------------
 # COLETA DOS ARQUIVOS .gd (recursivo)
 # ---------------------------------------------------------------------------
 func _collect_scripts(base_path):
-	var dir = Directory.new()
-	if dir.open(base_path) != OK:
+	var dir = DirAccess.open(base_path)
+	if dir == null:
 		return
-	dir.list_dir_begin(true, true) # skip_navigational, skip_hidden
+	dir.include_navigational = false
+	dir.include_hidden = false # ignora pastas ocultas (ex.: .godot)
+	dir.list_dir_begin()
 	var file_name = dir.get_next()
 	while file_name != "":
 		var full_path = _join_path(base_path, file_name)
@@ -95,16 +98,17 @@ func _join_path(base, name):
 # PARSER ESTÁTICO SIMPLES DE UM ARQUIVO .gd
 # ---------------------------------------------------------------------------
 func _parse_script(path):
-	var file = File.new()
-	if file.open(path, File.READ) != OK:
+	var file = FileAccess.open(path, FileAccess.READ)
+	if file == null:
 		return
 
 	var lines = []
 	while not file.eof_reached():
 		lines.append(file.get_line())
+	var file_len = file.get_length()
 	file.close()
-	if lines.size() > 0 and lines[lines.size() - 1] == "" and file.get_len() > 0:
-		lines.remove(lines.size() - 1) # remove linha vazia final gerada pelo EOF
+	if lines.size() > 0 and lines[lines.size() - 1] == "" and file_len > 0:
+		lines.remove_at(lines.size() - 1) # remove linha vazia final gerada pelo EOF
 
 	var info = ScriptInfo.new()
 	info.path = path
@@ -131,7 +135,7 @@ func _parse_script(path):
 			var paren = after.find("(")
 			var fname = after.substr(0, max(paren, 0)).strip_edges()
 			func_starts.append({"name": fname, "line": i})
-		elif raw.begins_with("var ") or raw.begins_with("const ") or raw.begins_with("onready var "):
+		elif raw.begins_with("var ") or raw.begins_with("const ") or raw.begins_with("onready var ") or raw.begins_with("@onready var "):
 			info.num_vars += 1
 
 		for m in call_regex.search_all(raw):
@@ -203,20 +207,20 @@ func _draw():
 
 
 func _draw_polymetric_view():
-	draw_rect(Rect2(Vector2.ZERO, rect_size), Color(1, 1, 1))
-	var f = get_font("font")
+	draw_rect(Rect2(Vector2.ZERO, size), Color(1, 1, 1))
+	var f = get_theme_default_font()
 
-	draw_string(f, Vector2(20, 30), "Visão Polimétrica - Projeto DoomClone", Color(0, 0, 0))
+	draw_string(f, Vector2(20, 30), "Visão Polimétrica - Projeto DoomClone", HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_SIZE, Color(0, 0, 0))
 	draw_string(f, Vector2(20, 52),
 		"Largura = nº de métodos | Altura = LOC total | Cor = intensidade de LOC | barras internas = tamanho de cada método",
-		Color(0.35, 0.35, 0.35))
+		HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_SIZE, Color(0.35, 0.35, 0.35))
 
 	var max_loc = 1
 	for info in infos:
 		max_loc = max(max_loc, info.loc)
 
 	var x = 100
-	var baseline = rect_size.y - 160
+	var baseline = size.y - 160
 
 	for info in infos:
 		var w = 60 + info.functions.size() * 34
@@ -237,25 +241,25 @@ func _draw_polymetric_view():
 			draw_rect(mrect, Color(0, 0, 0), false, 1.0)
 			mx += 26
 
-		draw_string(f, Vector2(x, baseline + 22), info.name, Color(0, 0, 0))
-		draw_string(f, Vector2(x, baseline + 42), "LOC: %d" % info.loc, Color(0.2, 0.2, 0.2))
-		draw_string(f, Vector2(x, baseline + 60), "Métodos: %d" % info.functions.size(), Color(0.2, 0.2, 0.2))
-		draw_string(f, Vector2(x, baseline + 78), "Vars: %d" % info.num_vars, Color(0.2, 0.2, 0.2))
+		draw_string(f, Vector2(x, baseline + 22), info.name, HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_SIZE, Color(0, 0, 0))
+		draw_string(f, Vector2(x, baseline + 42), "LOC: %d" % info.loc, HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_SIZE, Color(0.2, 0.2, 0.2))
+		draw_string(f, Vector2(x, baseline + 60), "Métodos: %d" % info.functions.size(), HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_SIZE, Color(0.2, 0.2, 0.2))
+		draw_string(f, Vector2(x, baseline + 78), "Vars: %d" % info.num_vars, HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_SIZE, Color(0.2, 0.2, 0.2))
 
 		x += w + 100
 
 
 func _draw_dependency_graph():
-	draw_rect(Rect2(Vector2.ZERO, rect_size), Color(1, 1, 1))
-	var f = get_font("font")
+	draw_rect(Rect2(Vector2.ZERO, size), Color(1, 1, 1))
+	var f = get_theme_default_font()
 
-	draw_string(f, Vector2(20, 30), "Grafo de Dependências - Projeto DoomClone", Color(0, 0, 0))
-	draw_string(f, Vector2(20, 52), "Setas = chamadas de método entre scripts (acoplamento)", Color(0.35, 0.35, 0.35))
+	draw_string(f, Vector2(20, 30), "Grafo de Dependências - Projeto DoomClone", HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_SIZE, Color(0, 0, 0))
+	draw_string(f, Vector2(20, 52), "Setas = chamadas de método entre scripts (acoplamento)", HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_SIZE, Color(0.35, 0.35, 0.35))
 
 	var positions = {}
 	var n = max(infos.size(), 1)
-	var center = rect_size / 2
-	var radius = min(rect_size.x, rect_size.y) * 0.32
+	var center = size / 2
+	var radius = min(size.x, size.y) * 0.32
 
 	for i in range(infos.size()):
 		var angle = TAU * i / n
@@ -265,15 +269,15 @@ func _draw_dependency_graph():
 		var p1 = positions[e.from]
 		var p2 = positions[e.to]
 		draw_line(p1, p2, Color(0.15, 0.4, 0.85), 2.5)
-		var mid = p1.linear_interpolate(p2, 0.5)
-		draw_string(f, mid, e.label + "()", Color(0.1, 0.1, 0.55))
+		var mid = p1.lerp(p2, 0.5)
+		draw_string(f, mid, e.label + "()", HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_SIZE, Color(0.1, 0.1, 0.55))
 
 	for info in infos:
 		var pos = positions[info.name]
 		draw_circle(pos, 55, Color(1, 0.85, 0.3))
 		draw_arc(pos, 55, 0, TAU, 48, Color(0, 0, 0), 2.0)
-		draw_string(f, pos + Vector2(-34, -2), info.name, Color(0, 0, 0))
-		draw_string(f, pos + Vector2(-34, 18), "%d métodos" % info.functions.size(), Color(0.25, 0.25, 0.25))
+		draw_string(f, pos + Vector2(-34, -2), info.name, HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_SIZE, Color(0, 0, 0))
+		draw_string(f, pos + Vector2(-34, 18), "%d métodos" % info.functions.size(), HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_SIZE, Color(0.25, 0.25, 0.25))
 
 
 # ---------------------------------------------------------------------------
@@ -293,7 +297,7 @@ func _process(_delta):
 		_save_screenshot("res://viz_polimetrica.png")
 		print("Salvo: res://viz_polimetrica.png")
 		stage = 2
-		update()
+		queue_redraw()
 	elif stage == 2:
 		_save_screenshot("res://viz_dependencias.png")
 		print("Salvo: res://viz_dependencias.png")
@@ -303,6 +307,5 @@ func _process(_delta):
 
 
 func _save_screenshot(path):
-	var img = get_viewport().get_texture().get_data()
-	img.flip_y()
+	var img = get_viewport().get_texture().get_image() # no Godot 4 a imagem já vem na orientação correta
 	img.save_png(path)

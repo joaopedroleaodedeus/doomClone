@@ -1,9 +1,9 @@
-extends KinematicBody
+extends CharacterBody3D
 
 const MOVE_SPEED = 3
 
-onready var raycast = $RayCast
-onready var anim_player = $AnimationPlayer
+@onready var raycast = $RayCast
+@onready var anim_player = $AnimationPlayer
 
 var player = null
 var dead = false
@@ -17,13 +17,13 @@ func _physics_process(delta):
 		return
 	if player == null:
 		return
-	
-	var vec_to_player = player.translation - translation
+
+	var vec_to_player = player.position - position
 	vec_to_player = vec_to_player.normalized()
-	raycast.cast_to = vec_to_player * 1.5
-	
+	raycast.target_position = vec_to_player * 1.5
+
 	move_and_collide(vec_to_player * MOVE_SPEED * delta)
-	
+
 	if raycast.is_colliding():
 		var coll = raycast.get_collider()
 		if coll != null and coll.name == "Player":
@@ -31,7 +31,7 @@ func _physics_process(delta):
 
 func kill():
 	dead = true
-	$CollisionShape.disabled = true
+	$CollisionShape.set_deferred("disabled", true)
 	anim_player.play("die")
 
 func set_player(p):
