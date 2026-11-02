@@ -14,14 +14,22 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	await get_tree().process_frame
 	get_tree().call_group("zombies", "set_player", self)
-	Global.life = Global.initialLife
-	Global.ammo = Global.initialAmmo
+	if Global.hasLoadedGame:
+		global_position = Global.playerPosition
+		Global.hasLoadedGame = false
+	else:
+		Global.life = Global.initialLife
+		Global.ammo = Global.initialAmmo
 
 func _input(event):
 	if event is InputEventMouseMotion:
 		rotation_degrees.y -= MOUSE_SENS * event.relative.x
 
 func _process(_delta):
+	if Input.is_action_just_pressed("carregar"):
+		SaveSystem.loadGame()
+	if Input.is_action_just_pressed("gravar"):
+		SaveSystem.savegame()
 	if Input.is_action_pressed("exit"):
 		get_tree().quit()
 	if Input.is_action_pressed("restart"):

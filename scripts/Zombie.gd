@@ -16,7 +16,7 @@ func _ready():
 	anim_player.play("walk")
 	add_to_group("zombies")
 	myName = get_tree().current_scene.name + "-" + name
-	print(myName)
+	if Global.enemyDeadDict.has(myName): queue_free()
 
 func _physics_process(delta):
 	if dead:
@@ -42,6 +42,7 @@ func kill():
 		dead = true
 		$CollisionShape.set_deferred("disabled", true)
 		anim_player.play("die")
+		Global.enemyDeadDict[myName] = true
 
 func set_player(p):
 	player = p
