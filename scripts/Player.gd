@@ -10,6 +10,8 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	await get_tree().process_frame
 	get_tree().call_group("zombies", "set_player", self)
+	Global.life = Global.initialLife
+	Global.ammo = Global.initialAmmo
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -39,11 +41,15 @@ func _physics_process(delta):
 	move_vec = move_vec.rotated(Vector3(0, 1, 0), rotation.y)
 	move_and_collide(move_vec * MOVE_SPEED * delta)
 
-	if Input.is_action_pressed("shoot") and !anim_player.is_playing():
+	if Input.is_action_pressed("shoot") and !anim_player.is_playing() and Global.ammo > 0:
+		Global.ammo -= 1
 		anim_player.play("shoot")
 		var coll = raycast.get_collider()
 		if raycast.is_colliding() and coll.has_method("kill"):
 			coll.kill()
 
 func kill():
-	get_tree().reload_current_scene()
+	if Global.life < 1:
+		get_tree().reload_current_scene()
+	else:
+		Global.life -= 2

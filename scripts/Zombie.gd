@@ -5,6 +5,8 @@ const MOVE_SPEED = 3
 @onready var raycast = $RayCast
 @onready var anim_player = $AnimationPlayer
 
+
+var lifeHit: int = 3
 var player = null
 var dead = false
 
@@ -30,9 +32,12 @@ func _physics_process(delta):
 			coll.kill()
 
 func kill():
-	dead = true
-	$CollisionShape.set_deferred("disabled", true)
-	anim_player.play("die")
+	if lifeHit > 1:
+		lifeHit -= 1
+	else: 
+		dead = true
+		$CollisionShape.set_deferred("disabled", true)
+		anim_player.play("die")
 
 func set_player(p):
 	player = p

@@ -15,6 +15,10 @@ run/main_scene="res://scenes/World.tscn"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://image/icon.png"
 
+[autoload]
+
+Global="*res://scripts/Global.gd"
+
 [display]
 
 window/size/viewport_width=1024
