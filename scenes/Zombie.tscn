@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3]
 
-[ext_resource type="Script" path="res://Zombie.gd" id="1"]
-[ext_resource type="Texture2D" path="res://fps_monster_sprites.png" id="2"]
+[ext_resource type="Script" uid="uid://ju0atye7l5cj" path="res://scripts/Zombie.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bacm6g3xyiyqe" path="res://image/fps_monster_sprites.png" id="2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
 radius = 0.8
