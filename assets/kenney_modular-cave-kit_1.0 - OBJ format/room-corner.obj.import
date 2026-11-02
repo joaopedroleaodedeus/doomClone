@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://deyddd2et1ycf"
+path="res://.godot/imported/room-corner.obj-6b8a02460f88f1534ce196a155234edb.mesh"
+
+[deps]
+
+files=["res://.godot/imported/room-corner.obj-6b8a02460f88f1534ce196a155234edb.mesh"]
+
+source_file="res://assets/kenney_modular-cave-kit_1.0 - OBJ format/room-corner.obj"
+dest_files=["res://.godot/imported/room-corner.obj-6b8a02460f88f1534ce196a155234edb.mesh", "res://.godot/imported/room-corner.obj-6b8a02460f88f1534ce196a155234edb.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

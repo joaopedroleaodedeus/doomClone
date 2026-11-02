@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://eln3ji0pn8cj"
+path="res://.godot/imported/template-floor-detail-a.obj-b870e4c39d3520d50e3ebe12799d2d5e.mesh"
+
+[deps]
+
+files=["res://.godot/imported/template-floor-detail-a.obj-b870e4c39d3520d50e3ebe12799d2d5e.mesh"]
+
+source_file="res://assets/kenney_modular-cave-kit_1.0 - OBJ format/template-floor-detail-a.obj"
+dest_files=["res://.godot/imported/template-floor-detail-a.obj-b870e4c39d3520d50e3ebe12799d2d5e.mesh", "res://.godot/imported/template-floor-detail-a.obj-b870e4c39d3520d50e3ebe12799d2d5e.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
