@@ -9,10 +9,14 @@ const MOVE_SPEED = 3
 var lifeHit: int = 3
 var player = null
 var dead = false
+var myName: String
+
 
 func _ready():
 	anim_player.play("walk")
 	add_to_group("zombies")
+	myName = get_tree().current_scene.name + "-" + name
+	print(myName)
 
 func _physics_process(delta):
 	if dead:

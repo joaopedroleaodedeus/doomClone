@@ -5,3 +5,7 @@ const initialAmmo = 20
 
 var life: int = initialLife
 var ammo: int = initialAmmo
+
+var enemyDeadDict: Dictionary = {
+	
+}

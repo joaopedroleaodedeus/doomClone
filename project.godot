@@ -18,6 +18,7 @@ config/icon="res://image/icon.png"
 [autoload]
 
 Global="*res://scripts/Global.gd"
+SaveSystem="*res://scripts/saveSystem.gd"
 
 [display]
 
