@@ -1,13 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://3o63dn8uw8do"]
+[gd_scene load_steps=11 format=3 uid="uid://3o63dn8uw8do"]
 
 [ext_resource type="Script" uid="uid://uo3f6ud5wmcq" path="res://scripts/Player.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://cy8p5mvedymn4" path="res://image/crosshair.png" id="2"]
+[ext_resource type="Shader" uid="uid://bid75uqo6het2" path="res://resources/black and white - shader.gdshader" id="2_qu4a1"]
 [ext_resource type="Texture2D" uid="uid://ba1mvc1fk3h77" path="res://image/fps_shooter_sprites.png" id="3"]
 [ext_resource type="PackedScene" uid="uid://7daamcbi8rru" path="res://scenes/hud.tscn" id="4_mdl7e"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
 radius = 0.49658203
 height = 3.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mdl7e"]
+shader = ExtResource("2_qu4a1")
 
 [sub_resource type="Animation" id="Animation_idle"]
 resource_name = "idle"
@@ -60,6 +64,15 @@ far = 100.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+visibility_layer = 512
+material = SubResource("ShaderMaterial_mdl7e")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
 anchors_preset = 8
 anchor_left = 0.5
@@ -70,6 +83,8 @@ offset_left = -16.0
 offset_top = -16.0
 offset_right = 16.0
 offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("2")
 stretch_mode = 3

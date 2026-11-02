@@ -1,11 +1,11 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=7 format=3 uid="uid://cu8ffdqrde38c"]
 
 [ext_resource type="Script" uid="uid://ju0atye7l5cj" path="res://scripts/Zombie.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://bacm6g3xyiyqe" path="res://image/fps_monster_sprites.png" id="2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
-radius = 0.8
-height = 2.6
+radius = 0.66796875
+height = 2.0563476
 
 [sub_resource type="Animation" id="Animation_die"]
 resource_name = "die"
@@ -52,6 +52,7 @@ _data = {
 script = ExtResource("1")
 
 [node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.27182615, 0)
 shape = SubResource("CapsuleShape3D_1")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
