@@ -6,6 +6,10 @@ const MOUSE_SENS = 0.5
 @onready var anim_player = $AnimationPlayer
 @onready var raycast = $RayCast
 
+@onready var spot_light_3d: SpotLight3D = $Camera/SpotLight3D
+
+
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	await get_tree().process_frame
@@ -22,6 +26,8 @@ func _process(_delta):
 		get_tree().quit()
 	if Input.is_action_pressed("restart"):
 		kill()
+	if Input.is_action_just_pressed("flashlight"):
+		spot_light_3d.visible = !spot_light_3d.visible
 
 func _physics_process(delta):
 	var move_vec = Vector3()

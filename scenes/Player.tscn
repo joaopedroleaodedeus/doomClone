@@ -120,5 +120,3 @@ libraries = {
 
 [node name="RayCast" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, -2000)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
