@@ -34,12 +34,8 @@ func savegame():
 	var saveData = {
 		"life": Global.life,
 		"ammo": Global.ammo,
-		"enemyDeadDict": Global.enemyDeadDict,
-		"playerPosition": [
-			Global.playerPosition.x,
-			Global.playerPosition.y,
-			Global.playerPosition.z
-		]
+		"enemyDeadDict": Global.get_dead_enemies(),
+		"playerPosition": _vector3_to_array(Global.playerPosition)
 	}
 
 	# Abre o arquivo em modo de escrita (sobrescreve)
@@ -87,7 +83,7 @@ func loadGame():
 	# Recupera os dados no Global
 	Global.life = int(saveData.get("life", Global.initialLife))
 	Global.ammo = int(saveData.get("ammo", Global.initialAmmo))
-	Global.enemyDeadDict = saveData.get("enemyDeadDict", {})
+	Global.set_dead_enemies(saveData.get("enemyDeadDict", {}))
 
 	# Recupera a posição do jogador
 	var positionData = saveData.get("playerPosition", [])
@@ -96,11 +92,7 @@ func loadGame():
 		push_error("SaveSystem: Posição do jogador inválida.")
 		return
 
-	Global.playerPosition = Vector3(
-		float(positionData[0]),
-		float(positionData[1]),
-		float(positionData[2])
-	)
+	Global.playerPosition = _array_to_vector3(positionData)
 
 	Global.hasLoadedGame = true
 
@@ -108,3 +100,15 @@ func loadGame():
 
 	# Reinicia a cena atual
 	get_tree().reload_current_scene()
+
+
+func _vector3_to_array(v: Vector3) -> Array:
+	return [v.x, v.y, v.z]
+
+
+func _array_to_vector3(values: Array) -> Vector3:
+	return Vector3(
+		float(values[0]),
+		float(values[1]),
+		float(values[2])
+	)

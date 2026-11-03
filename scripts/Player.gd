@@ -1,13 +1,12 @@
-extends CharacterBody3D
+extends Character
 
 const MOUSE_SENS = 0.5
-const WALK_SPEED = 10 # Replace Magic Number with Symbolic Constant
+const WALK_SPEED = 10
 const RUN_SPEED = 15
 
-@onready var anim_player = $AnimationPlayer
-@onready var raycast = $RayCast
-
 @onready var spot_light_3d: SpotLight3D = $Camera/SpotLight3D
+
+
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -36,22 +35,22 @@ func _process(_delta):
 	if Input.is_action_just_pressed("flashlight"):
 		spot_light_3d.visible = !spot_light_3d.visible
 
-func _physics_process(delta): # _physics_process(delta) alterado para que mantenha apenas as funções separadas (Extract Method)
+func _physics_process(delta):
 	_move(delta)
 	_handle_shooting()
 
-func _move(delta): # antes se encontrava no _physics_process(delta), mas agora é uma função propria que cuida do movimento(Extract Method)
-	var input = Input.get_vector("move_left", "move_right", "move_forwards", "move_backwards") # código alterado para um mais eficiente Substitute Algorithm
+func _move(delta):
+	var input = Input.get_vector("move_left", "move_right", "move_forwards", "move_backwards")
 	var move_vec = Vector3(input.x, 0, input.y)
-	move_vec = move_vec.rotated(Vector3.UP, rotation.y) # Replace Magic Number with Symbolic Constant 
-	move_and_collide(move_vec * _current_speed() * delta) #current speed virou uma função propria
+	move_vec = move_vec.rotated(Vector3.UP, rotation.y)
+	move_in_direction(move_vec, _current_speed(), delta)
 
 func _current_speed():
-	if Input.is_action_pressed("run"): #  antes era codigo dentro do _physics_process, agora ele foi adicionado em uma função propria via consulta (Replace Temp with Query)
+	if Input.is_action_pressed("run"):
 		return RUN_SPEED
 	return WALK_SPEED
 
-func _handle_shooting():# antes se encontrava no _physics_process(delta), mas agora é uma função propria que cuida do disparo da arma (Extract Method)
+func _handle_shooting():
 	if Input.is_action_pressed("shoot") and !anim_player.is_playing() and Global.ammo > 0:
 		Global.ammo -= 1
 		anim_player.play("shoot")
