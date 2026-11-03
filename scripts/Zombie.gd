@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 const MOVE_SPEED = 3
+const ATTACK_RANGE = 1.5 # Replace Magic Number with Symbolic Constant
 
 @onready var raycast = $RayCast
 @onready var anim_player = $AnimationPlayer
@@ -26,7 +27,7 @@ func _physics_process(delta):
 
 	var vec_to_player = player.position - position
 	vec_to_player = vec_to_player.normalized()
-	raycast.target_position = vec_to_player * 1.5
+	raycast.target_position = vec_to_player * ATTACK_RANGE # Replace Magic Number with Symbolic Constant
 
 	move_and_collide(vec_to_player * MOVE_SPEED * delta)
 
