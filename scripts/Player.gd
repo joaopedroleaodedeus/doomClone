@@ -10,8 +10,6 @@ const RUN_SPEED = 15
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	await get_tree().process_frame
-	get_tree().call_group("zombies", "set_player", self)
 	if Global.hasLoadedGame:
 		global_position = Global.playerPosition
 		Global.hasLoadedGame = false
