@@ -24,10 +24,6 @@ func _input(event):
 		rotation_degrees.y -= MOUSE_SENS * event.relative.x
 
 func _process(_delta):
-	if Input.is_action_just_pressed("carregar"):
-		SaveSystem.loadGame()
-	if Input.is_action_just_pressed("gravar"):
-		SaveSystem.savegame()
 	if Input.is_action_pressed("exit"):
 		get_tree().quit()
 	if Input.is_action_pressed("restart"):
@@ -50,13 +46,19 @@ func _current_speed():
 		return RUN_SPEED
 	return WALK_SPEED
 
+func _can_shoot():
+	return Input.is_action_pressed("shoot") and !anim_player.is_playing() and Global.ammo > 0
+
 func _handle_shooting():
-	if Input.is_action_pressed("shoot") and !anim_player.is_playing() and Global.ammo > 0:
-		Global.ammo -= 1
-		anim_player.play("shoot")
-		var coll = raycast.get_collider()
-		if raycast.is_colliding() and coll.has_method("kill"):
-			coll.kill()
+	if not _can_shoot():
+		return
+	Global.ammo -= 1
+	anim_player.play("shoot")
+	if not raycast.is_colliding():
+		return
+	var coll = raycast.get_collider()
+	if coll.has_method("kill"):
+		coll.kill()
 
 func kill():
 	if Global.life < 1:

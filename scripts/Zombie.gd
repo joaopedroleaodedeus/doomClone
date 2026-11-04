@@ -23,10 +23,10 @@ func _physics_process(delta):
 		return
 
 	var vec_to_player = player.position - position
-	vec_to_player = vec_to_player.normalized()
-	raycast.target_position = vec_to_player * ATTACK_RANGE
+	var direction = vec_to_player.normalized()
+	raycast.target_position = direction * ATTACK_RANGE
 
-	move_in_direction(vec_to_player, MOVE_SPEED, delta)
+	move_in_direction(direction, MOVE_SPEED, delta)
 
 	if raycast.is_colliding():
 		var coll = raycast.get_collider()
