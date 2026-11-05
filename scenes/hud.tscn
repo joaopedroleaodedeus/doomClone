@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://7daamcbi8rru"]
 
-[ext_resource type="Script" uid="uid://v4p5j8m5jp2i" path="res://scripts/hud.gd" id="1_ahhtf"]
+[ext_resource type="Script" uid="uid://dxcy5pmlw2mwk" path="res://scripts/hud.gd" id="1_ahhtf"]
 [ext_resource type="FontFile" uid="uid://0ei16ekcmm16" path="res://resources/fonts/Greengoth Expanded.ttf" id="2_oo0fn"]
 
 [node name="HUD" type="Control"]

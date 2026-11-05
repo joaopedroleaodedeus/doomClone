@@ -1,9 +1,17 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
 config_version=5
 
 [application]
 
 config/name="Doom Clone"
-run/main_scene="res://scenes/World.tscn"
+run/main_scene="uid://06ua7fe2q0t1"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://image/icon.png"
 
