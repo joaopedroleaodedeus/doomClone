@@ -3,6 +3,9 @@ extends Character
 const MOVE_SPEED = 3
 const ATTACK_RANGE = 1.5
 
+@onready var hit_sfx: AudioStreamPlayer3D = $HitSfx
+@onready var die_sfx: AudioStreamPlayer3D = $DieSfx
+
 
 var lifeHit: int = 3
 var player = null
@@ -30,8 +33,10 @@ func _physics_process(delta):
 func kill():
 	if lifeHit > 1:
 		lifeHit -= 1
+		hit_sfx.play()
 	else: 
 		set_physics_process(false)
 		$CollisionShape.set_deferred("disabled", true)
+		die_sfx.play()
 		anim_player.play("die")
 		Global.mark_enemy_dead(myName)

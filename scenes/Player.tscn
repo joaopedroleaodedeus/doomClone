@@ -1,10 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://3o63dn8uw8do"]
+[gd_scene load_steps=14 format=3 uid="uid://3o63dn8uw8do"]
 
 [ext_resource type="Script" uid="uid://uo3f6ud5wmcq" path="res://scripts/Player.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://cy8p5mvedymn4" path="res://image/crosshair.png" id="2"]
 [ext_resource type="Shader" uid="uid://bid75uqo6het2" path="res://resources/black and white - shader.gdshader" id="2_qu4a1"]
 [ext_resource type="Texture2D" uid="uid://ba1mvc1fk3h77" path="res://image/fps_shooter_sprites.png" id="3"]
 [ext_resource type="PackedScene" uid="uid://7daamcbi8rru" path="res://scenes/hud.tscn" id="4_mdl7e"]
+[ext_resource type="AudioStream" path="res://audio/shoot.wav" id="sfx_shoot"]
+[ext_resource type="AudioStream" path="res://audio/empty.wav" id="sfx_empty"]
+[ext_resource type="AudioStream" path="res://audio/player_hurt.wav" id="sfx_hurt"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
 radius = 0.49658203
@@ -120,3 +123,15 @@ libraries = {
 
 [node name="RayCast" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, -2000)
+
+[node name="ShootSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("sfx_shoot")
+
+[node name="EmptySfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("sfx_empty")
+
+[node name="HurtSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("sfx_hurt")
+
+[node name="StepSfx" type="AudioStreamPlayer" parent="."]
+volume_db = -4.0
