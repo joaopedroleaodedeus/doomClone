@@ -2,6 +2,7 @@ extends Character
 
 const MOVE_SPEED = 3
 const ATTACK_RANGE = 1.5
+const DETECTION_RANGE = 20.0
 
 @onready var hit_sfx: AudioStreamPlayer3D = $HitSfx
 @onready var die_sfx: AudioStreamPlayer3D = $DieSfx
@@ -22,13 +23,16 @@ func _ready():
 
 func _physics_process(delta):
 	var vec_to_player = player.position - position
-	var direction = vec_to_player.normalized()
-	raycast.target_position = direction * ATTACK_RANGE
+	var distance = vec_to_player.length()
 
-	move_in_direction(direction, MOVE_SPEED, delta)
+	if distance <= DETECTION_RANGE:
+		var direction = vec_to_player.normalized()
+		raycast.target_position = direction * ATTACK_RANGE
 
-	if raycast.is_colliding() and raycast.get_collider() == player:
-		player.kill()
+		move_in_direction(direction, MOVE_SPEED, delta)
+
+		if raycast.is_colliding() and raycast.get_collider() == player:
+			player.kill()
 
 func kill():
 	if lifeHit > 1:

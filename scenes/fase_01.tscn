@@ -464,45 +464,67 @@ shape = SubResource("ConcavePolygonShape3D_rhm52")
 [node name="Player" parent="." instance=ExtResource("12_v4txl")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 10, 2.0455098, 0)
 
-[node name="TemplateFloor" type="MeshInstance3D" parent="."]
+[node name="Top" type="MeshInstance3D" parent="."]
 transform = Transform3D(39.970036, 0, 0, 0, 1.24, 0, 0, 0, 32.416637, 10.747833, 8, -49.408073)
+visible = false
 mesh = ExtResource("13_xrw0n")
 
 [node name="Zombie" parent="." instance=ExtResource("16_yaqow")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3053136, 0)
 
+[node name="Zombie2" parent="." instance=ExtResource("16_yaqow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.862755, 1.3053136, 0)
+
+[node name="Zombie3" parent="." instance=ExtResource("16_yaqow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.862755, 1.3053136, -48.194366)
+
+[node name="Zombie4" parent="." instance=ExtResource("16_yaqow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.14154, 1.3053136, -36.071854)
+
+[node name="Zombie5" parent="." instance=ExtResource("16_yaqow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2354965, 1.3053136, -51.446743)
+
+[node name="Zombie6" parent="." instance=ExtResource("16_yaqow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.966232, 1.3053136, -51.446743)
+
+[node name="Zombie7" parent="." instance=ExtResource("16_yaqow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.32423, 1.3053136, -51.446743)
+
+[node name="Zombie8" parent="." instance=ExtResource("16_yaqow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.333744, 1.3053136, -16.853245)
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_yaqow")
 
 [node name="AmmoPickup1" parent="." instance=ExtResource("pk_ammo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.25, 1.5, -9.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.651089, 1.5, -9.75)
 
 [node name="HealthPickup1" parent="." instance=ExtResource("pk_health")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.75, 1.5, -19.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.75, 1.5, -62.089783)
 
 [node name="AmmoPickup2" parent="." instance=ExtResource("pk_ammo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.75, 1.5, -0.75)
 
 [node name="HealthPickup2" parent="." instance=ExtResource("pk_health")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.75, 1.5, -13.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.32541, 1.5, -54.09981)
 
 [node name="AmmoPickup3" parent="." instance=ExtResource("pk_ammo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.75, 1.5, -6.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.495434, 1.5, 1.9690456)
 
 [node name="HealthPickup3" parent="." instance=ExtResource("pk_health")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.75, 1.5, -19.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.133881, 1.5, -54.485096)
 
 [node name="AmmoPickup4" parent="." instance=ExtResource("pk_ammo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.25, 1.5, -36.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.83281, 1.5, -51.133514)
 
 [node name="HealthPickup4" parent="." instance=ExtResource("pk_health")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.25, 1.5, -21.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.43402, 1.5, -40.761738)
 
 [node name="AmmoPickup5" parent="." instance=ExtResource("pk_ammo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.75, 1.5, -19.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.97145, 1.5, -19.75)
 
 [node name="HealthPickup5" parent="." instance=ExtResource("pk_health")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.75, 1.5, -42.25)
 
 [node name="AmmoPickup6" parent="." instance=ExtResource("pk_ammo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.25, 1.5, -26.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.682747, 1.5, -65.79442)
