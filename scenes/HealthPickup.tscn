@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/Pickup.gd" id="1_pick"]
+[ext_resource type="Texture2D" path="res://image/pickup_health.png" id="2_tex"]
+[ext_resource type="AudioStream" path="res://audio/pickup_health.wav" id="3_sfx"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_pick"]
+radius = 1.2
+
+[node name="HealthPickup" type="Area3D"]
+script = ExtResource("1_pick")
+kind = 1
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_pick")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+pixel_size = 0.04
+billboard = 1
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("2_tex")
+
+[node name="PickupSfx" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_sfx")

@@ -35,6 +35,7 @@ func savegame():
 		"life": Global.life,
 		"ammo": Global.ammo,
 		"enemyDeadDict": Global.get_dead_enemies(),
+		"collectedPickups": Global.get_collected_pickups(),
 		"playerPosition": _vector3_to_array(Global.playerPosition)
 	}
 
@@ -84,6 +85,7 @@ func loadGame():
 	Global.life = int(saveData.get("life", Global.initialLife))
 	Global.ammo = int(saveData.get("ammo", Global.initialAmmo))
 	Global.set_dead_enemies(saveData.get("enemyDeadDict", {}))
+	Global.set_collected_pickups(saveData.get("collectedPickups", {}))
 
 	# Recupera a posição do jogador
 	var positionData = saveData.get("playerPosition", [])
