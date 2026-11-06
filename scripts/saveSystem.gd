@@ -1,7 +1,7 @@
 
 extends Node # SaveSystem
 
-const SAVE_DIR = "MeuJogo"
+const SAVE_DIR = "DoomClone"
 const SAVE_FILE = "savegame.txt"
 
 var savePath: String

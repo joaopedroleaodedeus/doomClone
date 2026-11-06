@@ -33,6 +33,7 @@ func _input(event):
 		rotation_degrees.y -= MOUSE_SENS * event.relative.x
 
 func _process(_delta):
+	_handle_saving()
 	if Input.is_action_pressed("exit"):
 		get_tree().quit()
 	if Input.is_action_pressed("restart"):
@@ -44,6 +45,12 @@ func _physics_process(delta):
 	_move(delta)
 	_handle_footsteps()
 	_handle_shooting()
+
+func _handle_saving():
+	if Input.is_action_just_pressed("gravar"):
+		SaveSystem.savegame()
+	if Input.is_action_just_pressed("carregar"):
+		SaveSystem.loadGame()
 
 func _move(delta):
 	var input = Input.get_vector("move_left", "move_right", "move_forwards", "move_backwards")
