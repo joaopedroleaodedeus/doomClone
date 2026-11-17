@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://ctrvcmvhdu5ga"
-path="res://.godot/imported/zombie_die.wav-4cbd41767580f37fd3032060926c7ed8.sample"
+uid="uid://cotyfqhndmdhg"
+path="res://.godot/imported/gate_locked.wav-ee4f98fcdc24bf361e203451830b7c26.sample"
 
 [deps]
 
-source_file="res://audio/zombie_die.wav"
-dest_files=["res://.godot/imported/zombie_die.wav-4cbd41767580f37fd3032060926c7ed8.sample"]
+source_file="res://audio/gate_locked.wav"
+dest_files=["res://.godot/imported/gate_locked.wav-ee4f98fcdc24bf361e203451830b7c26.sample"]
 
 [params]
 

@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cs0sq73qvsryx"
-path="res://.godot/imported/zombie_hit.wav-70bd766c710758e0de7861edd0bf29ff.sample"
+uid="uid://ydl3iwj2gkyn"
+path="res://.godot/imported/gate_open.wav-2d6c676f12addc2705b1c241042e51a5.sample"
 
 [deps]
 
-source_file="res://audio/zombie_hit.wav"
-dest_files=["res://.godot/imported/zombie_hit.wav-70bd766c710758e0de7861edd0bf29ff.sample"]
+source_file="res://audio/gate_open.wav"
+dest_files=["res://.godot/imported/gate_open.wav-2d6c676f12addc2705b1c241042e51a5.sample"]
 
 [params]
 

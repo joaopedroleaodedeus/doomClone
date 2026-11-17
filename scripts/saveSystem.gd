@@ -36,6 +36,9 @@ func savegame():
 		"ammo": Global.ammo,
 		"enemyDeadDict": Global.get_dead_enemies(),
 		"collectedPickups": Global.get_collected_pickups(),
+		"keys": Global.get_keys(),
+		"openedGates": Global.get_opened_gates(),
+		"collectedKeyPickups": Global.get_collected_key_pickups(),
 		"playerPosition": _vector3_to_array(Global.playerPosition)
 	}
 
@@ -86,6 +89,10 @@ func loadGame():
 	Global.ammo = int(saveData.get("ammo", Global.initialAmmo))
 	Global.set_dead_enemies(saveData.get("enemyDeadDict", {}))
 	Global.set_collected_pickups(saveData.get("collectedPickups", {}))
+	# saves antigos nao tem chaves/portoes: usa valores padrao
+	Global.set_keys(saveData.get("keys", []))
+	Global.set_opened_gates(saveData.get("openedGates", {}))
+	Global.set_collected_key_pickups(saveData.get("collectedKeyPickups", {}))
 
 	# Recupera a posição do jogador
 	var positionData = saveData.get("playerPosition", [])

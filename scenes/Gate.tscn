@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/Gate.gd" id="1_gate"]
+[ext_resource type="AudioStream" path="res://audio/gate_open.wav" id="2_open"]
+[ext_resource type="AudioStream" path="res://audio/gate_locked.wav" id="3_locked"]
+
+[node name="Gate" type="Node3D"]
+script = ExtResource("1_gate")
+key_type = 0
+style = 0
+
+[node name="OpenSfx" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_open")
+unit_size = 8.0
+
+[node name="LockedSfx" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_locked")
+unit_size = 8.0
