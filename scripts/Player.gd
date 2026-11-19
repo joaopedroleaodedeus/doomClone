@@ -49,8 +49,7 @@ func _physics_process(delta):
 	_handle_shooting()
 
 func _handle_saving():
-	if Input.is_action_just_pressed("gravar"):
-		SaveSystem.savegame()
+	# Salvar agora so nos pontos de salvamento (SavePoint, tecla E). Carregar continua no C.
 	if Input.is_action_just_pressed("carregar"):
 		SaveSystem.loadGame()
 

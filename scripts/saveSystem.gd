@@ -12,12 +12,13 @@ func _ready():
 	savePath = documentsPath.path_join(SAVE_DIR).path_join(SAVE_FILE)
 
 
-func savegame():
+# Retorna true se o save foi gravado com sucesso (usado pelo SavePoint).
+func savegame() -> bool:
 	var player = get_tree().get_first_node_in_group("Player")
 
 	if player == null:
 		push_error("SaveSystem: Jogador não encontrado no grupo Player.")
-		return
+		return false
 
 	# Cria o diretório caso não exista
 	var directory = savePath.get_base_dir()
@@ -25,7 +26,7 @@ func savegame():
 
 	if error != OK and error != ERR_ALREADY_EXISTS:
 		push_error("SaveSystem: Não foi possível criar o diretório.")
-		return
+		return false
 
 	# Atualiza a posição no Global
 	Global.playerPosition = player.global_position
@@ -48,12 +49,13 @@ func savegame():
 
 	if file == null:
 		push_error("SaveSystem: Erro ao abrir arquivo para escrita.")
-		return
+		return false
 
 	file.store_string(JSON.stringify(saveData, "\t"))
 	file.close()
 
 	print("Save realizado com sucesso!")
+	return true
 
 
 func loadGame():
