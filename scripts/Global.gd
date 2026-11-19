@@ -118,6 +118,18 @@ func reset_keys_and_gates() -> void:
 	collectedKeyPickups.clear()
 
 
+# Reset completo para "Novo Jogo" vindo do menu inicial: tudo volta ao estado inicial.
+func reset_all() -> void:
+	life = initialLife
+	ammo = initialAmmo
+	enemyDeadDict.clear()
+	collectedPickups.clear()
+	reset_keys_and_gates()
+	reset_level_time()
+	playerPosition = Vector3.ZERO
+	hasLoadedGame = false
+
+
 # Zera o cronometro da fase (novo jogo / restart / morte)
 func reset_level_time() -> void:
 	levelTime = 0.0

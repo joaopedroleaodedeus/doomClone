@@ -1,0 +1,140 @@
+[gd_scene load_steps=15 format=3 uid="uid://3o63dn8uw8do"]
+
+[ext_resource type="Script" uid="uid://uo3f6ud5wmcq" path="res://scripts/Player.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://cy8p5mvedymn4" path="res://image/crosshair.png" id="2"]
+[ext_resource type="Shader" uid="uid://bid75uqo6het2" path="res://resources/black and white - shader.gdshader" id="2_qu4a1"]
+[ext_resource type="Texture2D" uid="uid://ba1mvc1fk3h77" path="res://image/fps_shooter_sprites.png" id="3"]
+[ext_resource type="PackedScene" uid="uid://7daamcbi8rru" path="res://scenes/hud.tscn" id="4_mdl7e"]
+[ext_resource type="AudioStream" path="res://audio/shoot.wav" id="sfx_shoot"]
+[ext_resource type="AudioStream" path="res://audio/empty.wav" id="sfx_empty"]
+[ext_resource type="AudioStream" path="res://audio/player_hurt.wav" id="sfx_hurt"]
+[ext_resource type="PackedScene" path="res://scenes/PauseMenu.tscn" id="5_pause"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
+radius = 0.49658203
+height = 3.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mdl7e"]
+shader = ExtResource("2_qu4a1")
+
+[sub_resource type="Animation" id="Animation_idle"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_shoot"]
+resource_name = "shoot"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_player"]
+_data = {
+&"idle": SubResource("Animation_idle"),
+&"shoot": SubResource("Animation_shoot")
+}
+
+[node name="Player" type="CharacterBody3D" groups=["Player"]]
+script = ExtResource("1")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_1")
+debug_color = Color(0.6269, 0.00026693314, 0.6200425, 1)
+
+[node name="Camera" type="Camera3D" parent="."]
+current = true
+fov = 70.0
+far = 100.0
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5515251)
+light_energy = 10.0
+spot_range = 10.882698
+spot_angle = 32.0619
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+visibility_layer = 512
+material = SubResource("ShaderMaterial_mdl7e")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2")
+stretch_mode = 3
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="Sprite" type="Sprite2D" parent="CanvasLayer/Control"]
+position = Vector2(256, -256)
+texture = ExtResource("3")
+hframes = 4
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource("4_mdl7e")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_player")
+}
+
+[node name="RayCast" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, -2000)
+
+[node name="ShootSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("sfx_shoot")
+
+[node name="EmptySfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("sfx_empty")
+
+[node name="HurtSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("sfx_hurt")
+
+[node name="StepSfx" type="AudioStreamPlayer" parent="."]
+volume_db = -4.0
+
+[node name="PauseMenu" parent="." instance=ExtResource("5_pause")]

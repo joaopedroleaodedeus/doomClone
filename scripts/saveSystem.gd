@@ -58,17 +58,32 @@ func savegame() -> bool:
 	return true
 
 
+# True se existe um arquivo de save (usado pelo botao "Continuar" do menu inicial).
+func has_save() -> bool:
+	return FileAccess.file_exists(savePath)
+
+
+# Carrega o save e reinicia a fase atual (tecla C dentro do jogo).
 func loadGame():
+	if read_save():
+		# Reinicia a cena atual
+		get_tree().reload_current_scene()
+
+
+# Le o arquivo de save e preenche o Global (marca hasLoadedGame). Nao troca de cena:
+# quem chama decide (reload da fase atual ou change_scene_to_file a partir do menu).
+# Retorna true se o save foi lido com sucesso.
+func read_save() -> bool:
 	# Verifica se o arquivo existe
 	if not FileAccess.file_exists(savePath):
 		push_error("SaveSystem: Nenhum arquivo de save encontrado.")
-		return
+		return false
 
 	var file = FileAccess.open(savePath, FileAccess.READ)
 
 	if file == null:
 		push_error("SaveSystem: Erro ao abrir arquivo para leitura.")
-		return
+		return false
 
 	var content = file.get_as_text()
 	file.close()
@@ -79,13 +94,13 @@ func loadGame():
 
 	if error != OK:
 		push_error("SaveSystem: Arquivo de save inválido.")
-		return
+		return false
 
 	var saveData = json.data
 
 	if typeof(saveData) != TYPE_DICTIONARY:
 		push_error("SaveSystem: Estrutura de save inválida.")
-		return
+		return false
 
 	# Recupera os dados no Global
 	Global.life = int(saveData.get("life", Global.initialLife))
@@ -104,16 +119,14 @@ func loadGame():
 
 	if typeof(positionData) != TYPE_ARRAY or positionData.size() != 3:
 		push_error("SaveSystem: Posição do jogador inválida.")
-		return
+		return false
 
 	Global.playerPosition = _array_to_vector3(positionData)
 
 	Global.hasLoadedGame = true
 
 	print("Save carregado com sucesso!")
-
-	# Reinicia a cena atual
-	get_tree().reload_current_scene()
+	return true
 
 
 func _vector3_to_array(v: Vector3) -> Array:

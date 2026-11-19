@@ -8,14 +8,10 @@
 
 config_version=5
 
-[animation]
-
-compatibility/default_parent_skeleton_in_mesh_instance_3d=true
-
 [application]
 
 config/name="Doom Clone"
-run/main_scene="uid://06ua7fe2q0t1"
+run/main_scene="res://scenes/MainMenu.tscn"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://image/icon.png"
 
@@ -23,6 +19,7 @@ config/icon="res://image/icon.png"
 
 Global="*res://scripts/Global.gd"
 SaveSystem="*res://scripts/saveSystem.gd"
+Music="*res://scripts/Music.gd"
 
 [display]
 

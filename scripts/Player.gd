@@ -6,6 +6,7 @@ const RUN_SPEED = 15
 const STEP_DISTANCE = 3.5  # distancia andada entre dois passos
 const STEP_SOUNDS = [preload("res://audio/step_1.wav"), preload("res://audio/step_2.wav")]
 const DEATH_SFX = preload("res://audio/player_death.wav")
+const LEVEL_MUSIC = preload("res://audio/music_level.wav")
 
 @onready var spot_light_3d: SpotLight3D = $Camera/SpotLight3D
 @onready var shoot_sfx: AudioStreamPlayer = $ShootSfx
@@ -20,6 +21,7 @@ var _last_position := Vector3.ZERO
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	Music.play_track(LEVEL_MUSIC)
 	if Global.hasLoadedGame:
 		global_position = Global.playerPosition
 		Global.hasLoadedGame = false
@@ -36,8 +38,6 @@ func _input(event):
 
 func _process(_delta):
 	_handle_saving()
-	if Input.is_action_pressed("exit"):
-		get_tree().quit()
 	if Input.is_action_pressed("restart"):
 		get_tree().reload_current_scene()
 	if Input.is_action_just_pressed("flashlight"):
