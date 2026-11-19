@@ -27,6 +27,7 @@ func _ready():
 		Global.life = Global.initialLife
 		Global.ammo = Global.initialAmmo
 		Global.reset_keys_and_gates()
+		Global.reset_level_time()
 	_last_position = global_position
 
 func _input(event):

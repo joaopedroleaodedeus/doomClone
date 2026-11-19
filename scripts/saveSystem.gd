@@ -39,6 +39,7 @@ func savegame():
 		"keys": Global.get_keys(),
 		"openedGates": Global.get_opened_gates(),
 		"collectedKeyPickups": Global.get_collected_key_pickups(),
+		"levelTime": Global.levelTime,
 		"playerPosition": _vector3_to_array(Global.playerPosition)
 	}
 
@@ -93,6 +94,8 @@ func loadGame():
 	Global.set_keys(saveData.get("keys", []))
 	Global.set_opened_gates(saveData.get("openedGates", {}))
 	Global.set_collected_key_pickups(saveData.get("collectedKeyPickups", {}))
+	# saves antigos nao tem cronometro: comeca de 0
+	Global.levelTime = float(saveData.get("levelTime", 0.0))
 
 	# Recupera a posição do jogador
 	var positionData = saveData.get("playerPosition", [])

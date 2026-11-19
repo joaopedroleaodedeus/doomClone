@@ -15,6 +15,10 @@ var keys: Dictionary = {}
 var openedGates: Dictionary = {}
 var collectedKeyPickups: Dictionary = {}
 
+# Tempo (em segundos) gasto na fase atual. Acumulado pelo HUD enquanto o jogo roda
+# (nao conta com o jogo pausado) e salvo/carregado junto com o save.
+var levelTime: float = 0.0
+
 # Mensagem curta para o HUD
 signal hud_message(text: String)
 
@@ -112,6 +116,11 @@ func reset_keys_and_gates() -> void:
 	keys.clear()
 	openedGates.clear()
 	collectedKeyPickups.clear()
+
+
+# Zera o cronometro da fase (novo jogo / restart / morte)
+func reset_level_time() -> void:
+	levelTime = 0.0
 
 
 func show_message(text: String) -> void:

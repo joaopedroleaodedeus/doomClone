@@ -6,6 +6,7 @@ const MESSAGE_TIME := 2.0
 @onready var life_label: Label = $VBoxContainer/LifeLabel
 @onready var key_simple_icon: TextureRect = $KeysBox/KeySimpleIcon
 @onready var key_master_icon: TextureRect = $KeysBox/KeyMasterIcon
+@onready var timer_label: Label = $TimerLabel
 @onready var message_label: Label = $MessageLabel
 @onready var message_timer: Timer = $MessageTimer
 
@@ -18,11 +19,23 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	# O HUD so existe dentro da fase e para de processar quando a arvore e pausada,
+	# entao o cronometro so conta enquanto o jogador esta realmente jogando.
+	Global.levelTime += delta
+	timer_label.text = "Tempo: " + _format_time(Global.levelTime)
 	life_label.text = "Vida: " + str(Global.life)
 	ammo_label.text = "Munição: " + str(Global.ammo)
 	# chaves distinguidas pela forma do icone (a tela e em tons de cinza)
 	key_simple_icon.visible = Global.has_key(GameKeys.KeyType.SIMPLE)
 	key_master_icon.visible = Global.has_key(GameKeys.KeyType.MASTER)
+
+
+# Formata segundos como mm:ss (minutos podem passar de 99)
+func _format_time(seconds: float) -> String:
+	var total := int(seconds)
+	@warning_ignore("integer_division")
+	var minutes := total / 60
+	return "%02d:%02d" % [minutes, total % 60]
 
 
 func _on_hud_message(text: String) -> void:
